@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class Invoice(
     @PrimaryKey val id: Int,
     val weight: Double,
-    val destination: String,
+    val destination: Pair<Double, Double>,
     val observations: String,
     val vehiclePlateNumber: String,
     val status: InvoiceStatus = InvoiceStatus.PENDING

@@ -8,4 +8,9 @@ interface DeliveryRepository {
     fun updateInvoice(id: Int, status: InvoiceStatus)
 
     fun getVehicles()
+
+    fun getAssignments()
+
+    //todo verify if this is needed
+    fun updateAssignment(id: Int, status: InvoiceStatus)
 }
