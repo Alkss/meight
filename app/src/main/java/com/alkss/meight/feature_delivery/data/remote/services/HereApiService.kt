@@ -1,10 +1,7 @@
 package com.alkss.meight.feature_delivery.data.remote.services
 
 import com.alkss.meight.feature_delivery.data.remote.endpoint.HereApi
-import com.alkss.meight.feature_delivery.domain.model.Route
-import com.alkss.meight.feature_delivery.domain.model.Routes
-import retrofit2.Call
-import retrofit2.Response
+import com.alkss.meight.feature_delivery.domain.model.remote.Routes
 import retrofit2.Retrofit
 import javax.inject.Inject
 

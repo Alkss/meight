@@ -1,16 +1,34 @@
 package com.alkss.meight.feature_delivery.domain.repository
 
-import com.alkss.meight.feature_delivery.domain.model.InvoiceStatus
+import com.alkss.meight.feature_delivery.domain.model.local.Invoice
+import com.alkss.meight.feature_delivery.domain.model.local.Vehicle
+import kotlinx.coroutines.flow.Flow
 
 interface DeliveryRepository {
-    fun getInvoices()
 
-    fun updateInvoice(id: Int, status: InvoiceStatus)
+    //Invoices
+    fun getInvoices(): Flow<List<Invoice>>
 
-    fun getVehicles()
+    suspend fun getInvoiceById(id: Int): Invoice?
 
-    fun getAssignments()
+    fun getInvoiceListByPlateNumber(plateNumber: String): Flow<List<Invoice>>?
 
-    //todo verify if this is needed
-    fun updateAssignment(id: Int, status: InvoiceStatus)
+    suspend fun updateInvoice(invoice: Invoice)
+
+    suspend fun insertAllInvoices(invoices: List<Invoice>)
+
+
+    //Vehicle
+    fun getVehicles() : Flow<List<Vehicle>>
+
+    suspend fun getVehicleById(id: Int): Vehicle?
+
+    suspend fun insertAllVehicles(vehicles: List<Vehicle>)
+
+
+    //Assignments
+    suspend fun getAssignments()
+
+    fun updateAssignment(id: Int)
+
 }

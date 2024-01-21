@@ -1,8 +1,6 @@
-package com.alkss.meight.feature_delivery.domain.model
+package com.alkss.meight.feature_delivery.domain.model.remote
 
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
 
 
 data class Routes(

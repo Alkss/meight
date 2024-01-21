@@ -1,8 +1,7 @@
 package com.alkss.meight.feature_delivery.data.remote.endpoint
 
 import com.alkss.meight.core.HereAPI
-import com.alkss.meight.feature_delivery.domain.model.Routes
-import retrofit2.Call
+import com.alkss.meight.feature_delivery.domain.model.remote.Routes
 import retrofit2.http.GET
 import retrofit2.http.Query
 

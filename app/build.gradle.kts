@@ -70,6 +70,9 @@ dependencies {
     //Dagger - Hilt
     implementation("com.google.dagger:hilt-android:2.50")
     implementation(libs.androidx.junit.ktx)
+    implementation(libs.androidx.navigation.runtime.ktx)
+    implementation(libs.androidx.navigation.compose)
+    implementation("androidx.hilt:hilt-navigation-compose:1.1.0-alpha01")
     kapt("com.google.dagger:hilt-compiler:2.50")
 
     // For instrumentation tests
@@ -82,7 +85,7 @@ dependencies {
 
     //room dependencies
     implementation(libs.room.runtime)
-    annotationProcessor(libs.room.compiler)
+    kapt(libs.room.compiler)
     implementation(libs.room.ktx)
     testImplementation(libs.room.testing)
 

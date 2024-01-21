@@ -6,8 +6,12 @@ object HereAPI {
     const val BASE_URL: String = "https://router.hereapi.com/"
 
     val startingPoint = Pair(38.71814, -9.14552)
-    val stopA = Pair(40.97134, -5.66337)
-    val stopB = Pair(39.47590, -0.37696)
-    val stopC = Pair(41.15936, -8.62907)
-    val stopD = Pair(40.42382, -3.70254)
+    const val STOP_A_LAT = 40.97134
+    const val STOP_A_LONG = -5.66337
+    const val STOP_B_LAT = 39.47590
+    const val STOP_B_LONG = -0.37696
+    const val STOP_C_LAT = 41.15936
+    const val STOP_C_LONG = -8.62907
+    const val STOP_D_LAT = 40.42382
+    const val STOP_D_LONG = -3.70254
 }

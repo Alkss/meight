@@ -1,4 +1,4 @@
-package com.alkss.meight.feature_delivery.domain.model
+package com.alkss.meight.feature_delivery.domain.model.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

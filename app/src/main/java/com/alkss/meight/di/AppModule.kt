@@ -4,8 +4,20 @@ import android.app.Application
 import androidx.room.Room
 import com.alkss.meight.core.HereAPI
 import com.alkss.meight.feature_delivery.data.data_source.DeliveryDatabase
+import com.alkss.meight.feature_delivery.data.remote.manager.ServerMockManager
 import com.alkss.meight.feature_delivery.data.repository.DeliveryRepositoryImpl
 import com.alkss.meight.feature_delivery.domain.repository.DeliveryRepository
+import com.alkss.meight.feature_delivery.domain.use_case.invoice.GetInvoicesById
+import com.alkss.meight.feature_delivery.domain.use_case.invoice.InvoiceUseCases
+import com.alkss.meight.feature_delivery.domain.use_case.invoice.GetInvoicesByVehicle
+import com.alkss.meight.feature_delivery.domain.use_case.invoice.GetInvoicesRequest
+import com.alkss.meight.feature_delivery.domain.use_case.invoice.InsertInvoiceList
+import com.alkss.meight.feature_delivery.domain.use_case.invoice.UpdateInvoice
+import com.alkss.meight.feature_delivery.domain.use_case.invoice.UpdateInvoiceRequest
+import com.alkss.meight.feature_delivery.domain.use_case.vehicle.GetVehicles
+import com.alkss.meight.feature_delivery.domain.use_case.vehicle.VehicleUseCases
+import com.alkss.meight.feature_delivery.domain.use_case.vehicle.InsertVehicles
+import com.alkss.meight.feature_delivery.domain.use_case.vehicle.RefreshVehicles
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
@@ -39,7 +51,7 @@ object AppModule {
             app,
             DeliveryDatabase::class.java,
             DeliveryDatabase.DATABASE_NAME
-        ).build()
+        ).fallbackToDestructiveMigration().build()
     }
 
     @Provides
@@ -50,7 +62,11 @@ object AppModule {
         return Retrofit.Builder()
             .baseUrl(HereAPI.BASE_URL)
             .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().disableHtmlEscaping().setLenient().create()))
+            .addConverterFactory(
+                GsonConverterFactory.create(
+                    GsonBuilder().disableHtmlEscaping().setLenient().create()
+                )
+            )
             .build()
     }
 
@@ -67,4 +83,37 @@ object AppModule {
             .writeTimeout(30, TimeUnit.SECONDS)
             .build()
     }
+
+    @Provides
+    @Singleton
+    fun provideDeliveryUseCase(
+        mockManager: ServerMockManager,
+        repository: DeliveryRepository
+    ): InvoiceUseCases {
+        return InvoiceUseCases(
+            getInvoicesRequest = GetInvoicesRequest(mockManager),
+            updateInvoice = UpdateInvoice(repository),
+            getInvoicesByVehicle = GetInvoicesByVehicle(repository),
+            insertInvoiceList = InsertInvoiceList(repository),
+            getInvoicesById = GetInvoicesById(repository),
+            updateInvoiceRequest = UpdateInvoiceRequest(mockManager)
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideHomeUseCase(
+        repository: DeliveryRepository,
+        mockManager: ServerMockManager
+    ): VehicleUseCases {
+        return VehicleUseCases(
+            getVehicles = GetVehicles(repository),
+            refreshTrucks = RefreshVehicles(mockManager),
+            insertVehicles = InsertVehicles(repository)
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideServerMockManager() = ServerMockManager()
 }

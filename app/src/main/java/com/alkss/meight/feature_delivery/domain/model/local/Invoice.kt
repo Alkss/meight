@@ -1,4 +1,4 @@
-package com.alkss.meight.feature_delivery.domain.model
+package com.alkss.meight.feature_delivery.domain.model.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -7,14 +7,15 @@ import androidx.room.PrimaryKey
 data class Invoice(
     @PrimaryKey val id: Int,
     val weight: Double,
-    val destination: Pair<Double, Double>,
+    val destinationLat: Double,
+    val destinationLong: Double,
     val observations: String,
     val vehiclePlateNumber: String,
-    val status: InvoiceStatus = InvoiceStatus.PENDING
+    val status: InvoiceStatus = InvoiceStatus.IN_PROGRESS
 )
 
 enum class InvoiceStatus {
-    PENDING,
+    IN_PROGRESS,
     DELIVERED,
-    CANCELED
+    NOT_DELIVERED
 }
