@@ -9,6 +9,7 @@ import com.alkss.meight.feature_delivery.data.remote.services.HereApiService
 import com.alkss.meight.feature_delivery.domain.model.local.Invoice
 import javax.inject.Inject
 
+@RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 /**
  * Manages the communication with the Here API for calculating distances and routes.
  *
@@ -24,45 +25,6 @@ class HereApiManager @Inject constructor(
      * @param invoiceList The list of invoices.
      * @return A [NetworkResult] containing the list of invoices sorted by distance.
      */
-    suspend fun calculateDistance(
-        origin: Pair<Double, Double>,
-        invoiceList: MutableList<Invoice>
-    ): NetworkResult<List<Invoice>> {
-        // Implementation omitted for brevity
-    }
-
-    /**
-     * Calculates the farthest invoice from the origin in the given list using the Here API.
-     *
-     * @param origin The origin coordinates (latitude, longitude).
-     * @param invoiceList The list of invoices.
-     * @return A [NetworkResult] containing the farthest invoice.
-     */
-    private suspend fun calculateFarthest(
-        origin: Pair<Double, Double>,
-        invoiceList: List<Invoice>
-    ): NetworkResult<Invoice> {
-        // Implementation omitted for brevity
-    }
-
-    /**
-     * Calculates the distance between two points using the Here API.
-     *
-     * @param pointA The coordinates of point A (latitude, longitude).
-     * @param pointB The coordinates of point B (latitude, longitude).
-     * @return A [NetworkResult] containing the distance between the two points.
-     */
-    private suspend fun getDistance(
-        pointA: Pair<Double, Double>,
-        pointB: Pair<Double, Double>
-    ): NetworkResult<Int> {
-        // Implementation omitted for brevity
-    }
-}
-@RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
-class HereApiManager @Inject constructor(
-    private val hereApiService: HereApiService
-) {
     suspend fun calculateDistance(
         origin: Pair<Double, Double>,
         invoiceList: MutableList<Invoice>
@@ -99,6 +61,13 @@ class HereApiManager @Inject constructor(
         }
     }
 
+    /**
+     * Calculates the farthest invoice from the origin in the given list using the Here API.
+     *
+     * @param origin The origin coordinates (latitude, longitude).
+     * @param invoiceList The list of invoices.
+     * @return A [NetworkResult] containing the farthest invoice.
+     */
     private suspend fun calculateFarthest(
         origin: Pair<Double, Double>,
         invoiceList: List<Invoice>
@@ -136,6 +105,13 @@ class HereApiManager @Inject constructor(
         return NetworkResult.Success(furthestInvoice!!)
     }
 
+    /**
+     * Calculates the distance between two points using the Here API.
+     *
+     * @param pointA The coordinates of point A (latitude, longitude).
+     * @param pointB The coordinates of point B (latitude, longitude).
+     * @return A [NetworkResult] containing the distance between the two points.
+     */
     private suspend fun getDistance(
         pointA: Pair<Double, Double>,
         pointB: Pair<Double, Double>
@@ -157,5 +133,4 @@ class HereApiManager @Inject constructor(
             }
         }
     }
-
 }

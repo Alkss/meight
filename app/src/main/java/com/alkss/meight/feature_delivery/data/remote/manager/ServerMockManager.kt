@@ -7,40 +7,16 @@ import com.alkss.meight.feature_delivery.domain.model.local.Vehicle
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
+
 /**
  * This class represents a manager for server mock data.
  */
 class ServerMockManager {
-    
     /**
      * Retrieves all invoices from the server.
      *
      * @return A flow of list of invoices.
      */
-    fun getAllInvoices(): Flow<List<Invoice>> {
-        // Implementation details...
-    }
-
-    /**
-     * Retrieves all vehicles from the server.
-     *
-     * @return A flow of list of vehicles.
-     */
-    fun getAllVehicles(): Flow<List<Vehicle>> {
-        // Implementation details...
-    }
-
-    /**
-     * Updates the status of an invoice on the server.
-     *
-     * @param invoice The invoice to update.
-     * @return `true` if the update was successful, `false` otherwise.
-     */
-    fun updateInvoiceStatus(invoice: Invoice): Boolean {
-        // Implementation details...
-    }
-}
-class ServerMockManager {
     fun getAllInvoices(): Flow<List<Invoice>> {
         return flowOf(
             listOf(
@@ -129,6 +105,11 @@ class ServerMockManager {
         )
     }
 
+    /**
+     * Retrieves all vehicles from the server.
+     *
+     * @return A flow of list of vehicles.
+     */
     fun getAllVehicles(): Flow<List<Vehicle>> {
         return flowOf(
             listOf(
@@ -148,6 +129,12 @@ class ServerMockManager {
         )
     }
 
+    /**
+     * Updates the status of an invoice on the server.
+     *
+     * @param invoice The invoice to update.
+     * @return `true` if the update was successful, `false` otherwise.
+     */
     fun updateInvoiceStatus(invoice: Invoice): Boolean {
         return true
     }

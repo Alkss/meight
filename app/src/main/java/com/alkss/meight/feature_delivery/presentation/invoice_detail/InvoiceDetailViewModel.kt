@@ -29,7 +29,12 @@ class InvoiceDetailViewModel @Inject constructor(
     private val invoiceUseCases: InvoiceUseCases
 ) : ViewModel() {
 
-    // ... rest of the code ...
+    private val _state = MutableStateFlow(InvoiceDetailUiState())
+    val state = _state.asStateFlow()
+
+    private val _invoiceId: MutableStateFlow<String> = MutableStateFlow("")
+    private val _nextInvoiceId: MutableStateFlow<String> = MutableStateFlow("")
+    private val _vehicleId: MutableStateFlow<String> = MutableStateFlow("")
 
     /**
      * Updates the vehicle ID with the given value.
@@ -72,50 +77,6 @@ class InvoiceDetailViewModel @Inject constructor(
      *
      * @param event The event to handle.
      */
-    fun onEvent(event: InvoiceDetailEvent) {
-        // ... event handling code ...
-    }
-
-    // ... rest of the code ...
-
-    /**
-     * Calculates the remaining weight for the vehicle and updates the UI state.
-     */
-    private fun getRemainingWeight() {
-        // ... calculation code ...
-    }
-}
-@HiltViewModel
-class InvoiceDetailViewModel @Inject constructor(
-    private val vehicleUseCases: VehicleUseCases,
-    private val invoiceUseCases: InvoiceUseCases
-) : ViewModel() {
-
-    private val _state = MutableStateFlow(InvoiceDetailUiState())
-    val state = _state.asStateFlow()
-
-    private val _invoiceId: MutableStateFlow<String> = MutableStateFlow("")
-    private val _nextInvoiceId: MutableStateFlow<String> = MutableStateFlow("")
-    private val _vehicleId: MutableStateFlow<String> = MutableStateFlow("")
-
-    fun updateVehicleId(vehicleId: String) {
-        if (vehicleId.isNotBlank()) {
-            _vehicleId.update { vehicleId }
-        }
-    }
-
-    fun updateInvoiceId(invoiceId: String) {
-        if (invoiceId.isNotBlank()) {
-            _invoiceId.update { invoiceId }
-        }
-    }
-
-    fun updateNextInvoiceId(invoiceId: String) {
-        if (invoiceId.isNotBlank()) {
-            _nextInvoiceId.update { invoiceId }
-        }
-    }
-
     fun onEvent(event: InvoiceDetailEvent) {
         viewModelScope.launch(Dispatchers.IO) {
             val invoice = invoiceUseCases.getInvoicesById(_invoiceId.value.toInt())
@@ -189,6 +150,9 @@ class InvoiceDetailViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Calculates the remaining weight for the vehicle and updates the UI state.
+     */
     private fun getRemainingWeight() {
         viewModelScope.launch(Dispatchers.IO) {
             val invoices = invoiceUseCases.getInvoicesByVehicle(_vehicleId.value)
