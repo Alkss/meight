@@ -1,5 +1,7 @@
 package com.alkss.meight.feature_delivery.presentation.delivery
 
+import android.os.Build
+import androidx.annotation.RequiresExtension
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -37,6 +39,7 @@ import com.alkss.meight.feature_delivery.presentation.util.OnLifecycleEvent
 import com.alkss.meight.feature_delivery.presentation.util.Screen
 import com.alkss.meight.feature_delivery.presentation.util.getNext
 
+@RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @Composable
 fun DeliveryScreen(
     navController: NavController,
@@ -75,9 +78,18 @@ fun DeliveryScreen(
                     text = "You have no orders for the day",
                     style = MaterialTheme.typography.headlineLarge
                 )
-            } else {
+            }  else {
                 InvoiceListComponent(uiState, navController)
             }
+        }
+
+        uiState.apiError?.let {
+            Text(
+                modifier = Modifier.testTag(NO_INVOICES_AVAILABLE),
+                textAlign = TextAlign.Center,
+                text = it,
+                style = MaterialTheme.typography.headlineLarge
+            )
         }
 
         Column {
@@ -85,6 +97,7 @@ fun DeliveryScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Button(
+                    enabled = uiState.buttonEnabled,
                     modifier = Modifier
                         .fillMaxWidth()
                         .testTag(REFRESH_INVOICES),

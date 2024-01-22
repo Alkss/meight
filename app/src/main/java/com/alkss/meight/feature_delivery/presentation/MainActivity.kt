@@ -1,22 +1,15 @@
 package com.alkss.meight.feature_delivery.presentation
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.annotation.RequiresExtension
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
@@ -24,7 +17,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.alkss.meight.feature_delivery.data.remote.manager.HereApiManager
 import com.alkss.meight.feature_delivery.presentation.delivery.DeliveryScreen
 import com.alkss.meight.feature_delivery.presentation.delivery.DeliveryViewModel
 import com.alkss.meight.feature_delivery.presentation.home.HomeScreen
@@ -33,11 +25,10 @@ import com.alkss.meight.feature_delivery.presentation.invoice_detail.InvoiceDeta
 import com.alkss.meight.feature_delivery.presentation.util.Screen
 import com.alkss.meight.ui.theme.MeightTheme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.runBlocking
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -69,6 +60,7 @@ class MainActivity : ComponentActivity() {
                             val deliveryViewModel: DeliveryViewModel = hiltViewModel()
                             val vehiclePlate = it.arguments?.getString("vehiclePlate") ?: ""
                             deliveryViewModel.updateVehicleId(vehiclePlate)
+
                             DeliveryScreen(
                                 viewModel = deliveryViewModel, navController = navController
                             )

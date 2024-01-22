@@ -26,6 +26,8 @@ data class Section(
     val arrival: Arrival,
     @SerializedName("summary")
     val summary: Summary,
+    @SerializedName("polyline")
+    val polyline: String? = null,
     @SerializedName("transport")
     val transport: Transport
 )

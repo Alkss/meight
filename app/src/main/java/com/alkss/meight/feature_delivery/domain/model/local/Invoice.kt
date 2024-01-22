@@ -11,6 +11,7 @@ data class Invoice(
     val destinationLong: Double,
     val observations: String,
     val vehiclePlateNumber: String,
+    val order: Int = 0,
     val status: InvoiceStatus = InvoiceStatus.IN_PROGRESS
 )
 

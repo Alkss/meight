@@ -10,8 +10,13 @@ class HereApiService @Inject constructor(
 ) {
     private val api: HereApi = retrofit.create(HereApi::class.java)
 
-    suspend fun getRoute(origin: String, destination: String): Routes {
-        val route = api.getRoute(origin, destination)
+    suspend fun getDistance(origin: String, destination: String): Routes {
+        val route = api.getDistance(origin, destination)
+        return route
+    }
+
+    suspend fun getRoute(origin: String, via: List<String>, destination: String): Routes {
+        val route = api.getRoute(origin, via, destination)
         return route
     }
 }

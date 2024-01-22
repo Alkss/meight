@@ -30,6 +30,15 @@ class ServerMockManager {
                     status = InvoiceStatus.IN_PROGRESS
                 ),
                 Invoice(
+                    id = 7974452,
+                    weight = 2.3,
+                    destinationLat = HereAPI.STOP_B_LAT,
+                    destinationLong = HereAPI.STOP_B_LONG,
+                    observations = "Red House 1",
+                    vehiclePlateNumber = "12345",
+                    status = InvoiceStatus.IN_PROGRESS
+                ),
+                Invoice(
                     id = 7974,
                     weight = 2.3,
                     destinationLat = HereAPI.STOP_B_LAT,
@@ -75,7 +84,7 @@ class ServerMockManager {
                     status = InvoiceStatus.IN_PROGRESS
                 ),
                 Invoice(
-                    id = 79176,
+                    id = 791776,
                     weight = 2.3,
                     destinationLat = HereAPI.STOP_D_LAT,
                     destinationLong = HereAPI.STOP_D_LONG,

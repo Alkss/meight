@@ -8,16 +8,16 @@ import com.alkss.meight.feature_delivery.data.remote.manager.ServerMockManager
 import com.alkss.meight.feature_delivery.data.repository.DeliveryRepositoryImpl
 import com.alkss.meight.feature_delivery.domain.repository.DeliveryRepository
 import com.alkss.meight.feature_delivery.domain.use_case.invoice.GetInvoicesById
-import com.alkss.meight.feature_delivery.domain.use_case.invoice.InvoiceUseCases
 import com.alkss.meight.feature_delivery.domain.use_case.invoice.GetInvoicesByVehicle
 import com.alkss.meight.feature_delivery.domain.use_case.invoice.GetInvoicesRequest
 import com.alkss.meight.feature_delivery.domain.use_case.invoice.InsertInvoiceList
+import com.alkss.meight.feature_delivery.domain.use_case.invoice.InvoiceUseCases
 import com.alkss.meight.feature_delivery.domain.use_case.invoice.UpdateInvoice
 import com.alkss.meight.feature_delivery.domain.use_case.invoice.UpdateInvoiceRequest
 import com.alkss.meight.feature_delivery.domain.use_case.vehicle.GetVehicles
-import com.alkss.meight.feature_delivery.domain.use_case.vehicle.VehicleUseCases
 import com.alkss.meight.feature_delivery.domain.use_case.vehicle.InsertVehicles
 import com.alkss.meight.feature_delivery.domain.use_case.vehicle.RefreshVehicles
+import com.alkss.meight.feature_delivery.domain.use_case.vehicle.VehicleUseCases
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
@@ -27,7 +27,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -71,6 +70,7 @@ object AppModule {
     }
 
     @Provides
+    @Singleton
     fun provideOkHttpClient(): OkHttpClient {
         val logging = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
@@ -78,9 +78,8 @@ object AppModule {
 
         return OkHttpClient.Builder()
             .addInterceptor(logging)
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(30, TimeUnit.SECONDS)
+            .followRedirects(false)
+            .followSslRedirects(false)
             .build()
     }
 

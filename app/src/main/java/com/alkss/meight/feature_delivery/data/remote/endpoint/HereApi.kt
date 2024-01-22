@@ -7,9 +7,20 @@ import retrofit2.http.Query
 
 interface HereApi {
     @GET("v8/routes?transportMode=car")
-    suspend fun getRoute(
+    suspend fun getDistance(
         @Query(value = "origin", encoded = true) origin: String,
         @Query(value = "destination", encoded = true) destination: String,
         @Query("return") returnSummary: String = "summary",
-        @Query("apiKey") apiKey: String = HereAPI.API_KEY): Routes
+        @Query("apiKey") apiKey: String = HereAPI.API_KEY
+    ): Routes
+
+    @GET("v8/routes?transportMode=car")
+    suspend fun getRoute(
+        @Query(value = "origin", encoded = true) origin: String,
+        @Query(value = "via", encoded = true) via: List<String>,
+        @Query(value = "destination", encoded = true) destination: String,
+        @Query("return") returnSummary: String = "summary",
+        @Query("apiKey") apiKey: String = HereAPI.API_KEY
+    ): Routes
+
 }
