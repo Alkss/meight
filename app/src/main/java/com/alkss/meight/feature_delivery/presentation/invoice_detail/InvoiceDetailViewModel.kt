@@ -134,7 +134,8 @@ class InvoiceDetailViewModel @Inject constructor(
 
             var invoiceWeightAtVehicle = 0.0
 
-            val filteredList = invoices?.map { invoiceList -> invoiceList.filter { it.status != InvoiceStatus.DELIVERED} }
+            val filteredList =
+                invoices?.map { invoiceList -> invoiceList.filter { it.status != InvoiceStatus.DELIVERED } }
 
             if (filteredList?.firstOrNull()?.isEmpty() != true) {
                 invoiceWeightAtVehicle = filteredList?.map { invoiceList ->
@@ -145,8 +146,9 @@ class InvoiceDetailViewModel @Inject constructor(
             val availableWeight =
                 vehicle.firstOrNull()?.maxWeightCapacity?.minus(invoiceWeightAtVehicle)
 
+            val availableWeightFormatted = String.format("%.2f", availableWeight).toDouble()
             _state.update {
-                it.copy(availableWeight = availableWeight)
+                it.copy(availableWeight = availableWeightFormatted)
             }
         }
     }

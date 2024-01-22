@@ -46,7 +46,7 @@ fun HomeScreen(
                 text = "No trucks available"
             )
         }else{
-            TruckSelection(homeUiState, navController)
+            VehicleSelection(homeUiState, navController)
         }
         Button(
             modifier = Modifier
@@ -63,7 +63,7 @@ fun HomeScreen(
 }
 
 @Composable
-private fun TruckSelection(
+private fun VehicleSelection(
     homeUiState: HomeUiState,
     navController: NavController
 ) {
@@ -80,7 +80,7 @@ private fun TruckSelection(
             columns = GridCells.Adaptive(minSize = 128.dp)
         ) {
             itemsIndexed(homeUiState.vehicles) { _, vehicle ->
-                TruckBlock(
+                VehicleBlock(
                     modifier = Modifier.clickable {
                         navController.navigate(
                             Screen.DeliveryScreen.route +
@@ -95,7 +95,7 @@ private fun TruckSelection(
 }
 
 @Composable
-private fun TruckBlock(modifier: Modifier = Modifier, vehicle: Vehicle) {
+private fun VehicleBlock(modifier: Modifier = Modifier, vehicle: Vehicle) {
     ElevatedCard(
         modifier = modifier
             .padding(8.dp)
