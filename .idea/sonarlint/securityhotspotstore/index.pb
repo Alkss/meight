@@ -170,3 +170,5 @@ Tapp/src/main/java/com/alkss/meight/feature_delivery/presentation/util/ComposeUt
 aapp/src/main/java/com/alkss/meight/feature_delivery/domain/use_case/invoice/GetInvoicesRequest.kt,e\5\e5d6bc25c56d1a5cbb2385fa4ce23a9fe3749fa0
 ç
 ]app/src/main/java/com/alkss/meight/feature_delivery/domain/use_case/vehicle/InsertVehicles.kt,3\0\30421b5f4a2a3adc04b2b87e135e1286c52c08a5
+r
+Bapp/src/test/java/com/alkss/meight/feature_delivery/HereApiTest.kt,5\1\51dffa2b09805e391a9ed72e8a45acc2a03995b7

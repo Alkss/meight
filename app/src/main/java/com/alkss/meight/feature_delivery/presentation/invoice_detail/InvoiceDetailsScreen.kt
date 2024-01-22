@@ -1,5 +1,8 @@
 package com.alkss.meight.feature_delivery.presentation.invoice_detail
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,18 +19,17 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
+import androidx.navigation.NavController
 import com.alkss.meight.feature_delivery.domain.model.local.InvoiceStatus
 import com.alkss.meight.feature_delivery.presentation.util.OnLifecycleEvent
 
@@ -38,13 +40,14 @@ fun InvoiceDetailsScreen(
 ) {
     val uiState = viewModel.state.collectAsState().value
 
-    OnLifecycleEvent { owner, event ->
+    OnLifecycleEvent { _, event ->
         when (event) {
             Lifecycle.Event.ON_RESUME -> {
                 viewModel.onEvent(InvoiceDetailEvent.GetInvoices)
             }
 
-            else -> {}
+            else -> { /* do nothihng */
+            }
         }
     }
 
@@ -70,16 +73,18 @@ fun InvoiceDetailsScreen(
                 )
             }
             Column(Modifier.padding(16.dp)) {
-                Text(
-                    style = MaterialTheme.typography.bodyMedium,
-                    text = "Weight: ${uiState.currentInvoice?.weight}"
-                )
+                uiState.currentInvoice?.destination?.let {
+                    GeoButton(
+                        modifier = Modifier.fillMaxWidth(),
+                        latitude = it.first, longitude = it.second
+                    )
+                }
 
                 Spacer(modifier = Modifier.height(4.dp))
 
                 Text(
                     style = MaterialTheme.typography.bodyMedium,
-                    text = "Destination: ${uiState.currentInvoice?.destination}"
+                    text = "Weight: ${uiState.currentInvoice?.weight}"
                 )
 
                 Spacer(modifier = Modifier.height(4.dp))
@@ -171,6 +176,8 @@ private fun NextInvoice(uiState: InvoiceDetailUiState) {
                     text = "Next Invoice",
                     style = MaterialTheme.typography.bodyLarge
                 )
+                Spacer(modifier = Modifier.height(4.dp))
+                GeoButton(latitude = it.destination.first, longitude = it.destination.second)
             }
             Row(
                 Modifier
@@ -195,4 +202,25 @@ private fun NextInvoice(uiState: InvoiceDetailUiState) {
             }
         }
     }
+}
+
+@Composable
+fun GeoButton(modifier: Modifier = Modifier, latitude: Double, longitude: Double) {
+    val context = LocalContext.current
+    TextButton(modifier = modifier, onClick = { openGeoLocation(context, latitude, longitude) }) {
+        Text(
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Center,
+            text = "Open Location",
+            style = MaterialTheme.typography.bodyMedium,
+        )
+    }
+}
+
+fun openGeoLocation(context: Context, latitude: Double, longitude: Double) {
+    val openGeoIntent =
+        Intent(Intent.ACTION_VIEW, Uri.parse("google.navigation:q=$latitude,$longitude")).apply {
+            setPackage("com.google.android.apps.maps")
+        }
+    context.startActivity(openGeoIntent)
 }

@@ -1,4 +1,4 @@
-package com.alkss.meight
+package com.alkss.meight.feature_delivery
 
 import com.alkss.meight.core.HereAPI
 import com.alkss.meight.feature_delivery.data.remote.manager.HereApiManager
