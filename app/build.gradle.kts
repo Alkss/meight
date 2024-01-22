@@ -17,7 +17,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.alkss.meight.feature_delivery.presentation.home.HiltTestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -61,6 +61,13 @@ android {
 }
 
 dependencies {
+    //Tests
+    androidTestImplementation("androidx.test.ext:junit:1.1.3")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    testImplementation("io.mockk:mockk:1.13.9")
+    testImplementation("io.mockk:mockk-android:1.13.9")
+    testImplementation("io.mockk:mockk-agent:1.13.9")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1")
     //Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.okhttp3:okhttp:4.9.0")

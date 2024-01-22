@@ -23,11 +23,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
+import com.alkss.meight.core.TestTags.DELIVERY_SCREEN
+import com.alkss.meight.core.TestTags.NO_INVOICES_AVAILABLE
+import com.alkss.meight.core.TestTags.REFRESH_INVOICES
 import com.alkss.meight.feature_delivery.domain.model.local.InvoiceStatus
 import com.alkss.meight.feature_delivery.presentation.util.OnLifecycleEvent
 import com.alkss.meight.feature_delivery.presentation.util.Screen
@@ -54,11 +58,11 @@ fun DeliveryScreen(
         }
     }
 
-
     Column(
         Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(16.dp)
+            .testTag(DELIVERY_SCREEN),
         verticalArrangement = Arrangement.SpaceBetween,
     ) {
         Row(
@@ -66,6 +70,7 @@ fun DeliveryScreen(
         ) {
             if (uiState.invoiceList.isEmpty()) {
                 Text(
+                    modifier = Modifier.testTag(NO_INVOICES_AVAILABLE),
                     textAlign = TextAlign.Center,
                     text = "You have no orders for the day",
                     style = MaterialTheme.typography.headlineLarge
@@ -80,7 +85,9 @@ fun DeliveryScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Button(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .testTag(REFRESH_INVOICES),
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                     onClick = { viewModel.onEvent(DeliveryEvent.GetInvoicesRequest) }
                 ) {
@@ -119,7 +126,7 @@ private fun InvoiceListComponent(
         LazyColumn(
             modifier = Modifier.fillMaxWidth()
         ) {
-            itemsIndexed(uiState.invoiceList) { invoiceId, invoiceDetail ->
+            itemsIndexed(uiState.invoiceList) { itemIndex, invoiceDetail ->
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -161,7 +168,13 @@ private fun InvoiceListComponent(
                                 else -> {
                                     val nextInvoiceId =
                                         uiState.invoiceList.getNext(invoiceDetail)?.id
-                                    ButtonRegion(navController, invoiceDetail.id, nextInvoiceId, invoiceDetail.vehiclePlateNumber)
+                                    ButtonRegion(
+                                        navController = navController,
+                                        itemIndex = itemIndex,
+                                        invoiceClickedId = invoiceDetail.id,
+                                        nextInvoiceId = nextInvoiceId,
+                                        vehicleId = invoiceDetail.vehiclePlateNumber
+                                    )
                                 }
                             }
 
@@ -182,13 +195,15 @@ private fun InvoiceListComponent(
 @Composable
 private fun ButtonRegion(
     navController: NavController,
+    itemIndex: Int,
     invoiceClickedId: Int,
     nextInvoiceId: Int? = null,
     vehicleId: String = ""
 ) {
     Button(
         modifier = Modifier
-            .padding(end = 8.dp),
+            .padding(end = 8.dp)
+            .testTag("index_$itemIndex"),
         colors = ButtonDefaults.buttonColors(containerColor = Color.Gray),
         onClick = {
             navController.navigate(

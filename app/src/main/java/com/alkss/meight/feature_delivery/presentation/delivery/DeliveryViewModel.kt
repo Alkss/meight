@@ -18,8 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DeliveryViewModel @Inject constructor(
-    private val invoiceUseCases: InvoiceUseCases,
-    private val hereApiManager: HereApiManager
+    private val invoiceUseCases: InvoiceUseCases
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<DeliveryUiState> =

@@ -25,11 +25,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
+import com.alkss.meight.core.TestTags.DELIVERED_BUTTON
+import com.alkss.meight.core.TestTags.INVOICE_DETAILS_SCREEN
+import com.alkss.meight.core.TestTags.NOT_DELIVERED_BUTTON
 import com.alkss.meight.feature_delivery.domain.model.local.InvoiceStatus
 import com.alkss.meight.feature_delivery.presentation.util.OnLifecycleEvent
 
@@ -54,6 +58,7 @@ fun InvoiceDetailsScreen(
     Column(
         Modifier
             .fillMaxSize()
+            .testTag(INVOICE_DETAILS_SCREEN)
     ) {
         ElevatedCard(
             modifier = Modifier
@@ -116,7 +121,7 @@ fun InvoiceDetailsScreen(
             ) {
                 Button(
                     enabled = uiState.currentInvoice?.status != InvoiceStatus.DELIVERED,
-                    modifier = Modifier.weight(10f),
+                    modifier = Modifier.weight(10f).testTag(DELIVERED_BUTTON),
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.onBackground),
                     onClick = {
                         viewModel.onEvent(InvoiceDetailEvent.MarkAsDelivered)
@@ -127,7 +132,7 @@ fun InvoiceDetailsScreen(
                 Spacer(modifier = Modifier.weight(1f))
                 Button(
                     enabled = uiState.currentInvoice?.status != InvoiceStatus.NOT_DELIVERED,
-                    modifier = Modifier.weight(10f),
+                    modifier = Modifier.weight(10f).testTag(NOT_DELIVERED_BUTTON),
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error),
                     onClick = {
                         viewModel.onEvent(InvoiceDetailEvent.MarkAsNotDelivered)

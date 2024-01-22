@@ -23,11 +23,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.alkss.meight.R
+import com.alkss.meight.core.TestTags.NO_TRUCKS_AVAILABLE
+import com.alkss.meight.core.TestTags.REFRESH_VEHICLES
 import com.alkss.meight.feature_delivery.domain.model.local.Vehicle
 import com.alkss.meight.feature_delivery.presentation.util.Screen
 
@@ -42,8 +45,8 @@ fun HomeScreen(
     Box(modifier = modifier.fillMaxSize()) {
         if (homeUiState.vehicles.isEmpty()) {
             Text(
-                modifier = Modifier.align(Alignment.Center),
-                text = "No trucks available"
+                modifier = Modifier.align(Alignment.Center).testTag(NO_TRUCKS_AVAILABLE),
+                text = "No trucks available",
             )
         }else{
             VehicleSelection(homeUiState, navController)
@@ -52,7 +55,8 @@ fun HomeScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp)
-                .align(Alignment.BottomCenter),
+                .align(Alignment.BottomCenter)
+                .testTag(REFRESH_VEHICLES),
             onClick = {
                 homeViewModel.onEvent(HomeEvent.RefreshVehiclesRequest)
             }
@@ -79,14 +83,14 @@ private fun VehicleSelection(
             contentPadding = PaddingValues(8.dp),
             columns = GridCells.Adaptive(minSize = 128.dp)
         ) {
-            itemsIndexed(homeUiState.vehicles) { _, vehicle ->
+            itemsIndexed(homeUiState.vehicles) { itemId, vehicle ->
                 VehicleBlock(
                     modifier = Modifier.clickable {
                         navController.navigate(
                             Screen.DeliveryScreen.route +
                                     "?vehiclePlate=${vehicle.plateNumber}"
                         )
-                    },
+                    }.testTag("vehicle_item_$itemId"),
                     vehicle = vehicle
                 )
             }
