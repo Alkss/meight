@@ -12,6 +12,15 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * ViewModel class for the Home screen.
+ *
+ * This class is responsible for handling the business logic and state management of the Home screen.
+ * It uses the [VehicleUseCases] to interact with the data layer and provides the necessary data to the UI.
+ *
+ * @property vehicleUseCases The use cases for vehicle-related operations.
+ * @property state The state flow representing the UI state of the Home screen.
+ */
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val vehicleUseCases: VehicleUseCases
@@ -20,6 +29,11 @@ class HomeViewModel @Inject constructor(
     private val _state = MutableStateFlow(HomeUiState())
     val state = _state.asStateFlow()
 
+    /**
+     * Handles the events triggered by the UI.
+     *
+     * @param event The event to be handled.
+     */
     fun onEvent(event: HomeEvent) {
         when (event) {
             HomeEvent.RefreshVehiclesRequest -> {

@@ -26,8 +26,21 @@ import com.alkss.meight.feature_delivery.presentation.util.Screen
 import com.alkss.meight.ui.theme.MeightTheme
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * MainActivity is the entry point of the delivery feature in the Meight app.
+ * It extends ComponentActivity and is annotated with @AndroidEntryPoint for Hilt dependency injection.
+ * The activity sets up the navigation graph using Jetpack Compose and handles the creation of different screens.
+ */
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    /**
+     * Called when the activity is being created.
+     * It initializes the UI and sets up the navigation graph.
+     * The content of the activity is defined using Jetpack Compose.
+     * The navigation graph consists of multiple composable screens.
+     * The start destination is set to the HomeScreen.
+     * The activity also enables edge-to-edge display.
+     */
     @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,11 +56,14 @@ class MainActivity : ComponentActivity() {
                         navController = navController,
                         startDestination = Screen.HomeScreen.route
                     ) {
+                        // HomeScreen composable
                         composable(route = Screen.HomeScreen.route) {
                             HomeScreen(
                                 navController = navController
                             )
                         }
+                        
+                        // DeliveryScreen composable
                         composable(
                             route = Screen.DeliveryScreen.route + "?vehiclePlate={vehiclePlate}",
                             arguments = listOf(navArgument(
@@ -65,6 +81,8 @@ class MainActivity : ComponentActivity() {
                                 viewModel = deliveryViewModel, navController = navController
                             )
                         }
+                        
+                        // InvoiceDetailsScreen composable
                         composable(
                             route = Screen.InvoiceDetailsScreen.route
                                     + "?invoiceId={invoiceId}"

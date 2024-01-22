@@ -5,22 +5,86 @@ import androidx.lifecycle.viewModelScope
 import com.alkss.meight.feature_delivery.domain.model.local.InvoiceStatus
 import com.alkss.meight.feature_delivery.domain.use_case.invoice.InvoiceUseCases
 import com.alkss.meight.feature_delivery.domain.use_case.vehicle.VehicleUseCases
-import com.alkss.meight.feature_delivery.presentation.delivery.DeliveryUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.forEach
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * ViewModel class for the Invoice Detail screen.
+ * This class is responsible for handling user interactions and updating the UI state accordingly.
+ *
+ * @property vehicleUseCases The use cases for vehicle-related operations.
+ * @property invoiceUseCases The use cases for invoice-related operations.
+ */
+@HiltViewModel
+class InvoiceDetailViewModel @Inject constructor(
+    private val vehicleUseCases: VehicleUseCases,
+    private val invoiceUseCases: InvoiceUseCases
+) : ViewModel() {
+
+    // ... rest of the code ...
+
+    /**
+     * Updates the vehicle ID with the given value.
+     * If the vehicle ID is not blank, it will be updated.
+     *
+     * @param vehicleId The new vehicle ID.
+     */
+    fun updateVehicleId(vehicleId: String) {
+        if (vehicleId.isNotBlank()) {
+            _vehicleId.update { vehicleId }
+        }
+    }
+
+    /**
+     * Updates the invoice ID with the given value.
+     * If the invoice ID is not blank, it will be updated.
+     *
+     * @param invoiceId The new invoice ID.
+     */
+    fun updateInvoiceId(invoiceId: String) {
+        if (invoiceId.isNotBlank()) {
+            _invoiceId.update { invoiceId }
+        }
+    }
+
+    /**
+     * Updates the next invoice ID with the given value.
+     * If the invoice ID is not blank, it will be updated.
+     *
+     * @param invoiceId The new invoice ID.
+     */
+    fun updateNextInvoiceId(invoiceId: String) {
+        if (invoiceId.isNotBlank()) {
+            _nextInvoiceId.update { invoiceId }
+        }
+    }
+
+    /**
+     * Handles the given [event] and updates the UI state accordingly.
+     *
+     * @param event The event to handle.
+     */
+    fun onEvent(event: InvoiceDetailEvent) {
+        // ... event handling code ...
+    }
+
+    // ... rest of the code ...
+
+    /**
+     * Calculates the remaining weight for the vehicle and updates the UI state.
+     */
+    private fun getRemainingWeight() {
+        // ... calculation code ...
+    }
+}
 @HiltViewModel
 class InvoiceDetailViewModel @Inject constructor(
     private val vehicleUseCases: VehicleUseCases,

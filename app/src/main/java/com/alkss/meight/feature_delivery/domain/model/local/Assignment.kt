@@ -4,6 +4,17 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
+/**
+ * Represents an assignment in the delivery domain.
+ *
+ * An assignment is a task that associates an invoice with a vehicle for delivery.
+ *
+ * @property id The unique identifier of the assignment.
+ * @property invoiceId The ID of the associated invoice.
+ * @property vehiclePlateNumber The plate number of the associated vehicle.
+ * @property date The date of the assignment.
+ * @property availableWeight The available weight for delivery.
+ */
 @Entity(
     foreignKeys = [
         ForeignKey(
