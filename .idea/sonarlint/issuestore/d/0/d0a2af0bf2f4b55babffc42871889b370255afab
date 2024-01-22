@@ -1,3 +1,5 @@
 
-=kotlin:S125"Remove this commented out code.(Çª¢á8ÁÔ¬’Ó1
-Ukotlin:S11446"6Remove this unused private "calculateFarthest" method.(é¾“³8ÂÔ¬’Ó1
+=kotlin:S125"Remove this commented out code.(Çª¢á8İ¬ŒšÓ1
+Ukotlin:S11444"6Remove this unused private "calculateFarthest" method.(é¾“³8à¬ŒšÓ1
+bkotlin:S6510"CMove "return" statements from all branches before "when" statement.(œÂØû8´šÓ1
+gkotlin:S6510_"CMove "return" statements from all branches before "when" statement.(‰ï‹òøÿÿÿÿ8´šÓ1

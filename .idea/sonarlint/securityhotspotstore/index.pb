@@ -450,3 +450,7 @@ w
 G.idea/sonarlint/issuestore/6/7/67e2a9e6148d0fc18b00e6e15b18ee16818e24ba,6\4\64129858dd949f7a238285afd594a5f4f36f53bd
 U
 %app/documentation/Feature_Delivery.md,a\2\a225b0cb37662fa8092a97b1888f569d7ece9996
+j
+:app/src/main/java/com/alkss/meight/core/NetworkResponse.kt,8\d\8db7992186b93808ee9d67ce2b40f17fa41d80ec
+h
+8app/src/main/java/com/alkss/meight/core/NetworkResult.kt,a\9\a9b6fb647cf4875028e22f6a3964759bc1c4baa6

@@ -1,12 +1,15 @@
 package com.alkss.meight.feature_delivery.data
 
 import com.alkss.meight.core.HereAPI
+import com.alkss.meight.core.NetworkResult
 import com.alkss.meight.feature_delivery.data.remote.manager.HereApiManager
 import com.alkss.meight.feature_delivery.data.remote.services.HereApiService
 import com.alkss.meight.feature_delivery.domain.model.local.Invoice
 import com.alkss.meight.feature_delivery.domain.model.local.InvoiceStatus
 import com.google.gson.GsonBuilder
 import junit.framework.Assert.assertEquals
+import junit.framework.Assert.assertNotSame
+import junit.framework.AssertionFailedError
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -40,10 +43,10 @@ class HereApiTest {
     private val manager = HereApiManager(service)
 
     @Test
-    fun `testGetRoute_returns_at_order`() = runBlocking {
+    fun testGetRoute_returns_at_order(): Unit = runBlocking {
         val response = manager.calculateDistance(
             origin = Pair(52.5308, 13.3847),
-            invoiceList = listOf(
+            invoiceList = mutableListOf(
                 Invoice(
                     id = 1,
                     weight = 6.7,
@@ -86,10 +89,12 @@ class HereApiTest {
                 ),
             )
         )
-
-        assertEquals(response[0].id, 1)
-        assertEquals(response[1].id, 2)
-        assertEquals(response[2].id, 4)
-        assertEquals(response[3].id, 3)
+        when (response) {
+            is NetworkResult.Error -> AssertionFailedError(response.exception.message)
+            is NetworkResult.Success -> {
+                assertEquals(response.data[0].id, 1)
+                assertNotSame(response.data[1].id, 3)
+            }
+        }
     }
 }

@@ -6,6 +6,7 @@ import androidx.annotation.RequiresExtension
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alkss.meight.core.HereAPI
+import com.alkss.meight.core.NetworkResult
 import com.alkss.meight.feature_delivery.data.remote.manager.HereApiManager
 import com.alkss.meight.feature_delivery.domain.model.local.Invoice
 import com.alkss.meight.feature_delivery.domain.use_case.invoice.InvoiceUseCases
@@ -74,17 +75,28 @@ class DeliveryViewModel @Inject constructor(
         Log.d("DeliveryViewModel", "getInvoices: ${_vehicleId.value}")
         _state.update { it.copy(buttonEnabled = false) }
         val filteredList = invoiceList.filter { it.vehiclePlateNumber == _vehicleId.value }
-        try {
-            val orderedList = hereApiManager.calculateDistance(
-                origin = HereAPI.startingPoint,
-                invoiceList = filteredList.toMutableList()
-            )
-            invoiceUseCases.insertInvoiceList.invoke(orderedList)
-            _state.update { DeliveryUiState.mapFrom(orderedList) }
-            _state.update { it.copy(apiError = null) }
-        } catch (e: Exception) {
-            _state.update { it.copy(apiError = e.message, buttonEnabled = true) }
-            Log.d("DeliveryViewModel", "calculateDistance: ${e.message}")
+        when (val orderedList = hereApiManager.calculateDistance(
+            origin = HereAPI.startingPoint,
+            invoiceList = filteredList.toMutableList()
+        )) {
+            is NetworkResult.Error -> {
+                _state.update {
+                    it.copy(
+                        apiError = orderedList.exception.message,
+                        buttonEnabled = true
+                    )
+                }
+                return
+            }
+
+            is NetworkResult.Success -> {
+                invoiceUseCases.insertInvoiceList.invoke(orderedList.data)
+                _state.update { DeliveryUiState.mapFrom(orderedList.data) }
+                _state.update {
+                    it.copy(apiError = null)
+
+                }
+            }
         }
         _state.update { it.copy(buttonEnabled = true) }
     }
