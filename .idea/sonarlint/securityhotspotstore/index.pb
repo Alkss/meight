@@ -172,3 +172,5 @@ aapp/src/main/java/com/alkss/meight/feature_delivery/domain/use_case/invoice/Get
 ]app/src/main/java/com/alkss/meight/feature_delivery/domain/use_case/vehicle/InsertVehicles.kt,3\0\30421b5f4a2a3adc04b2b87e135e1286c52c08a5
 r
 Bapp/src/test/java/com/alkss/meight/feature_delivery/HereApiTest.kt,5\1\51dffa2b09805e391a9ed72e8a45acc2a03995b7
+w
+Gapp/src/test/java/com/alkss/meight/feature_delivery/data/HereApiTest.kt,2\1\21759bbdcd2e1ffe96232cc89e03224593be99af

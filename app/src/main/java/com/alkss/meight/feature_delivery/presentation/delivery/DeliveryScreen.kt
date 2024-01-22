@@ -43,7 +43,11 @@ fun DeliveryScreen(
     OnLifecycleEvent { owner, event ->
         when (event) {
             Lifecycle.Event.ON_RESUME -> {
-                viewModel.onEvent(DeliveryEvent.GetInvoicesByVehicle(uiState.invoiceList.first().vehiclePlateNumber))
+                uiState.invoiceList.firstOrNull()?.vehiclePlateNumber?.let {
+                    DeliveryEvent.GetInvoicesByVehicle(
+                        it
+                    )
+                }?.let { viewModel.onEvent(it) }
             }
 
             else -> {}
